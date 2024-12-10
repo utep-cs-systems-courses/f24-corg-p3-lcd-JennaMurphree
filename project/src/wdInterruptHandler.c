@@ -3,31 +3,29 @@
 #include "switches.h"
 
 unsigned int count = 0;
-unsigned int seconds = 1;
-unsigned int redInterval = 1;
-unsigned int greenInterval = 3;
-char redBright = 0;
-char greenBright = 0;
+unsigned int seconds = 1;//unused currently.  see updateSeconds method
+short goalCoordinates[2] = {20, 20};
+short playerCoordinates[2] = {5,5};
+short previousCoordinates[2] = {5,5};
+char success = 0;
 
 void __interrupt_vec(WDT_VECTOR) WDT () {
-  if(count == 250){
-    redBright = (seconds%redInterval == 0)? 1 : 0;
-    greenBright = (seconds % greenInterval == 0)? 1 : 0;
-    updateSeconds();
-    updateIntervals();
+  if(count == 25){// check every 10th of a second
+    updatePosition();
+    success = (goalCoordinates[0] <= playerCoordinates[0] && goalCoordinates[1] <= playerCoordinates[1])? 1: 0;
   }
   setState();
   updateCount();
 }
 
 void updateCount(){
-  if(count >= 250)
+  if(count >= 25)
     count = 0;
   else
     count++;
 }
 
-void updateSeconds(){
+void updateSeconds(){//unused currently as no changes occur based on seconds.  May be used for music. idk though
   if(seconds >=12)
     seconds = 1;
   else

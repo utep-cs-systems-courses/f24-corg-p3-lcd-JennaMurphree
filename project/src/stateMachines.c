@@ -5,19 +5,21 @@
 #include "stateMachines.h"
 
 void setState(){
-  if(redBright)
-    setRedBright();
-  else
-    setRedDim();
-  if(greenBright)
-    setGreenBright();
-  else
-    setGreenDim();
-  //set buzzer
-  if(redInterval == greenInterval)
-    buzzerSetPeriod(1582);
-  else
+  if(success){
+    setVictory();
+  }
+  else{
+    updateScreen();
     buzzerSetPeriod(0);
+  }
+}
+
+void updateScreen(){
+  //different options for success or not?
+}
+
+void setVictory(){
+  buzzerSetPeriod(200);
 }
 
 void setRedDim(){

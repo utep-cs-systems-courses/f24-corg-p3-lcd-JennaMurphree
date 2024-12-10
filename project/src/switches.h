@@ -11,6 +11,6 @@
 
 void switchInit();
 void switchInterruptHandler();
-void updateIntervals();
+void updatePosition();
 
 #endif
