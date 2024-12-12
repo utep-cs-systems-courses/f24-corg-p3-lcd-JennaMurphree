@@ -4,18 +4,17 @@
 
 unsigned int count = 0;
 unsigned int seconds = 1;//unused currently.  see updateSeconds method
-short goalCoordinates[2] = {20, 20};
-short playerCoordinates[2] = {5,5};
-short previousCoordinates[2] = {5,5};
+unsigned char goalCoordinates[2] = {6,6};
+unsigned char playerCoordinates[2] = {20,20};
 char success = 0;
 
-void __interrupt_vec(WDT_VECTOR) WDT () {
+void wdt_c_handler () {
   if(count == 25){// check every 10th of a second
     updatePosition();
-    success = (goalCoordinates[0] <= playerCoordinates[0] && goalCoordinates[1] <= playerCoordinates[1])? 1: 0;
+    success = (goalCoordinates[0] == playerCoordinates[0] && goalCoordinates[1] == playerCoordinates[1])? 1: 0;
   }
-  setState();
   updateCount();
+    
 }
 
 void updateCount(){

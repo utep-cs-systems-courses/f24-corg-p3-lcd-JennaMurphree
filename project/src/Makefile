@@ -5,13 +5,13 @@ CFLAGS          = -mmcu=${CPU} -I../h -L/opt/ti/msp430_gcc/include
 
 #switch the compiler (for the internal make rules)
 CC              = msp430-elf-gcc
-AS              = msp430-elf-as
+AS              = msp430-elf-as -mmcu=${CPU} -c
 
 all: toy.elf 
 
 #additional rules for files
-toy.elf: ${COMMON_OBJECTS} main.o buzzer.o interuptVectorHandler.o led.o stateMachines.o switches.o wdInterruptHandler.o ../lib/libTimer.a
-	${CC} ${CFLAGS} -o $@ $^
+toy.elf: ${COMMON_OBJECTS} main.o buzzer.o interuptVectorHandler.o led.o stateMachines.o switches.o wdInterruptHandler.o wdt_handler.o ../lib/libTimer.a  ../lib/libLcd.a
+	${CC} ${CFLAGS} -o $@ $^ 
 
 load: toy.elf
 	msp430loader.sh  $^
